@@ -21,7 +21,7 @@ if (!isset($_SESSION['parent_name']) || $_SESSION['role'] != 'parent') {
 
 <body>
 <div class="container mt-5">
-        <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="row justify-content-center align-items-center"  style="min-height: 100vh;">
             <div class="col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-body">
