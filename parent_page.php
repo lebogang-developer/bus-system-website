@@ -20,8 +20,8 @@ if (!isset($_SESSION['parent_name']) || $_SESSION['role'] != 'parent') {
 </head>
 
 <body>
-<div class="container mt-5">
-        <div class="row justify-content-center align-items-center"  style="min-height: 100vh;">
+    <div class="container mt-5">
+        <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
             <div class="col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-body">
@@ -69,9 +69,11 @@ if (!isset($_SESSION['parent_name']) || $_SESSION['role'] != 'parent') {
                                 </label>
                                 <select class="form-select" id="bus_route" name="bus_route" required>
                                     <option selected disabled>Select Bus Route</option>
-                                    <option value="bus_1">Bus 1 - Route A</option>
-                                    <option value="bus_2">Bus 2 - Route B</option>
-                                    <option value="bus_3">Bus 3 - Route C</option>
+                                    <option value="bus_1">Bus 1 - Rooihuiskraal</option>
+
+                                    <option value="bus_2">Bus 2 -Wierdapark</option>
+
+                                    <option value="bus_3">Bus 3 - Centurion</option>
                                 </select>
                             </div>
                             <!-- Pick-Up Time -->

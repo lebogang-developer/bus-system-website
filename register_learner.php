@@ -3,17 +3,18 @@ session_start();
 require 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['learner_name'];
-    $surname = $_POST['learner_surname'];
-    $cell_no = $_POST['learner_cell_no'];
-    $grade = $_POST['grade'];
+    $learner_name = $_POST['learner_name'];
+    $learner_surname = $_POST['learner_surname'];
+    $learner_cell_no = $_POST['cell_no'];
+    $learner_grade = $_POST['grade'];
     $bus_route = $_POST['bus_route'];
+    $pickup_time = $_POST['pickup_time'];
 
-    $sql = "INSERT INTO learner_tbl (name, surname, cell_no, grade, bus_route, parent_id) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO learner_tbl (learner_name, learner_surname, learner_cell_no, learner_grade, bus_route, pickup_time) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $parent_id = $_SESSION['parent_name']; // Assuming parent ID is the username
 
-    $stmt->bind_param("sssssi", $name, $surname, $cell_no, $grade, $bus_route, $parent_id);
+    $stmt->bind_param("sssssi", $learner_name, $learner_surname, $learner_cell_no, $learner_grade, $bus_route, $pickup_time);
 
     if ($stmt->execute()) {
         echo "Learner registered successfully!";
@@ -28,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="container mt-5 mb-5">
         <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
@@ -87,9 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </label>
                                 <select class="form-select" id="bus_route" name="bus_route" required>
                                     <option selected disabled>Select Bus Route</option>
-                                    <option value="bus_1">Bus 1 - Route A</option>
-                                    <option value="bus_2">Bus 2 - Route B</option>
-                                    <option value="bus_3">Bus 3 - Route C</option>
+                                    <option value="bus_1">Bus 1 - Rooihuiskraal</option>
+
+                                    <option value="bus_2">Bus 2 -Wierdapark</option>
+
+                                    <option value="bus_3">Bus 3 - Centurion</option>
                                 </select>
                             </div>
                             <!-- Pick-Up Time -->
@@ -100,6 +105,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="pickup_time" id="morning" value="morning" required>
                                     <label class="form-check-label" for="morning">
+                                        Morning Pick-Up &  Afternoon Pick-Up
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pickup_time" id="afternoon" value="afternoon" required>
+                                    <label class="form-check-label" for="afternoon">
                                         Morning Pick-Up
                                     </label>
                                 </div>
@@ -126,5 +137,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Bootstrap JS (Optional, if you need Bootstrap's JavaScript functionality) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
 
+</html>
