@@ -30,7 +30,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'admin') {
                                 <i class="fas fa-user-plus fa-3x mb-3"></i>
                                 <h4 class="card-title">Register Learners</h4>
                                 <p class="card-text">Add learners to the Online Bus Registration System.</p>
-                                <a href="register_learner.php" class="btn btn-primary">
+                                <a href="register_learner_admin.php" class="btn btn-primary">
                                     <i class="fas fa-arrow-right"></i> Go to Registration
                                 </a>
                             </div>
@@ -43,7 +43,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'admin') {
                                 <i class="fas fa-bus-alt fa-3x mb-3"></i>
                                 <h4 class="card-title">Apply for Bus Transport</h4>
                                 <p class="card-text">Apply for 2025 bus transport on behalf of learners.</p>
-                                <a href="apply_bus.php" class="btn btn-primary">
+                                <a href="apply_bus_transport.php" class="btn btn-primary">
                                     <i class="fas fa-arrow-right"></i> Apply Now
                                 </a>
                             </div>
@@ -62,15 +62,15 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'admin') {
                             </div>
                         </div>
                     </div>
-                    <!-- Logout -->
+                    <!-- MIS -->
                     <div class="col-md-6">
                         <div class="card shadow-lg text-center">
                             <div class="card-body">
                                 <i class="fas fa-sign-out-alt fa-3x mb-3"></i>
-                                <h4 class="card-title">Logout</h4>
-                                <p class="card-text">End your current session.</p>
-                                <a href="logout.php" class="btn btn-danger">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                <h4 class="card-title">MIS</h4>
+                                <p class="card-text">Manage MIS Reports</p>
+                                <a href="mis_reports.php" class="btn btn-primary">
+                                <i class="fas fa-arrow-right"></i> Go to MIS Reports
                                 </a>
                             </div>
                         </div>

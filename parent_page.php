@@ -5,6 +5,7 @@ if (!isset($_SESSION['parent_name']) || $_SESSION['role'] != 'parent') {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
