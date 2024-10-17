@@ -3,7 +3,7 @@ session_start();
 require 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"]) {
-    $learner_id = $_POST['learner_id'];
+    $learner_id = $_POST['learner_id'] ?? null;
 
     // Check if space is available
     $sql_check = "SELECT COUNT(*) FROM learner_tbl WHERE status  'registered'";
@@ -51,12 +51,11 @@ if ($_SERVER["REQUEST_METHOD"]) {
         <h2 class="text-center">Manage Waiting List</h2>
         <form action="manage_waiting_list.php" method="post">
             <div class="mb-3">
-                <label for="learner_id" class="form-label">Learner ID</label>
-                <input type="text" class="form-control" id="learner_id" name="learner_id" required>
+                <!-- <label for="learner_id" class="form-label">Learner ID</label> -->
+                <input type="hidden" name="learner_id" value="<?php echo $learner_id; ?>">
             </div>
             <button type="submit" class="btn btn-primary">Move Learner to Registered</button>
         </form>
     </div>
 </body>
-
 </html>

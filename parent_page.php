@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['parent_name']) || $_SESSION['role'] != 'parent') {
+if (!isset($_SESSION['username']) || $_SESSION['role'] != 'parent') {
     header("Location: login.html");
     exit();
 }
@@ -26,7 +26,7 @@ if (!isset($_SESSION['parent_name']) || $_SESSION['role'] != 'parent') {
             <div class="col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-body">
-                        <h2 class="text-center mb-4">Learner Bus Registration</h2>
+                        <h2 class="text-center mb-4">Register Leaner On The Bus System</h2>
                         <form action="register_learner.php" method="POST">
                             <!-- Learner Name -->
                             <div class="mb-3">
@@ -64,48 +64,20 @@ if (!isset($_SESSION['parent_name']) || $_SESSION['role'] != 'parent') {
                                 </select>
                             </div>
                             <!-- Bus Route -->
-                            <div class="mb-3">
-                                <label for="bus_route" class="form-label">
-                                    <i class="fas fa-bus"></i> Select Bus & Route
-                                </label>
-                                <select class="form-select" id="bus_route" name="bus_route" required>
-                                    <option selected disabled>Select Bus Route</option>
-                                    <option value="bus_1">Bus 1 - Rooihuiskraal</option>
 
-                                    <option value="bus_2">Bus 2 -Wierdapark</option>
-
-                                    <option value="bus_3">Bus 3 - Centurion</option>
-                                </select>
-                            </div>
-                            <!-- Pick-Up Time -->
-                            <div class="mb-3">
-                                <label class="form-label">
-                                    <i class="fas fa-clock"></i> Pick-Up Time
-                                </label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pickup_time" id="morning" value="morning" required>
-                                    <label class="form-check-label" for="morning">
-                                        Morning Pick-Up
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pickup_time" id="afternoon" value="afternoon" required>
-                                    <label class="form-check-label" for="afternoon">
-                                        Afternoon Pick-Up
-                                    </label>
-                                </div>
-                            </div>
-                            <!-- Submit Button -->
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-paper-plane"></i> Submit Application
-                                </button>
-                            </div>
-                        </form>
                     </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-paper-plane"></i> Submit Application
+                        </button>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Bootstrap JS (Optional, if you need Bootstrap's JavaScript functionality) -->

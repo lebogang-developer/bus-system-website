@@ -7,14 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $learner_surname = $_POST['learner_surname'];
     $learner_cell_no = $_POST['cell_no'];
     $learner_grade = $_POST['grade'];
-    $bus_route = $_POST['bus_route'];
-    $pickup_time = $_POST['pickup_time'];
 
-    $sql = "INSERT INTO learner_tbl (learner_name, learner_surname, learner_cell_no, learner_grade, bus_route, pickup_time) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO learner_tbl (learner_name, learner_surname, learner_cell_no, learner_grade) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $parent_id = $_SESSION['parent_name']; // Assuming parent ID is the username
+    // $parent_id = $_SESSION['parent_name']; 
+    // Assuming parent ID is the username
 
-    $stmt->bind_param("sssssi", $learner_name, $learner_surname, $learner_cell_no, $learner_grade, $bus_route, $pickup_time);
+    $stmt->bind_param("ssss", $learner_name, $learner_surname, $learner_cell_no, $learner_grade);
 
     if ($stmt->execute()) {
         echo "Learner registered successfully!";
@@ -29,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="pickup_time" id="morning" value="morning" required>
                                     <label class="form-check-label" for="morning">
-                                        Morning Pick-Up &  Afternoon Pick-Up
+                                        Morning Pick-Up & Afternoon Pick-Up
                                     </label>
                                 </div>
                                 <div class="form-check">

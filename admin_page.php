@@ -8,6 +8,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'admin') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'admin') {
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
         <div class="row justify-content-center align-items-center text-center" style="min-height: 100vh;">
@@ -68,9 +70,11 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'admin') {
                             <div class="card-body">
                                 <i class="fas fa-sign-out-alt fa-3x mb-3"></i>
                                 <h4 class="card-title">MIS</h4>
-                                <p class="card-text">Manage MIS Reports</p>
+                                <p class="card-text">
+                                    MIS required by the School, the following reports must be presented in the dashboard:
+                                </p>
                                 <a href="mis_reports.php" class="btn btn-primary">
-                                <i class="fas fa-arrow-right"></i> Go to MIS Reports
+                                    <i class="fas fa-arrow-right"></i> Go to MIS Reports
                                 </a>
                             </div>
                         </div>
@@ -83,4 +87,5 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'admin') {
     <!-- Bootstrap JS (Optional, if you need Bootstrap's JavaScript functionality) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
