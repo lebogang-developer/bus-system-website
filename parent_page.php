@@ -18,6 +18,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'parent') {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
         crossorigin="anonymous" />
     <title>Parent Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -63,8 +64,6 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'parent') {
                                     <option value="12">Grade 12</option>
                                 </select>
                             </div>
-                            <!-- Bus Route -->
-
                     </div>
 
                     <!-- Submit Button -->
