@@ -1,6 +1,7 @@
 <?php
 require 'config.php';
 
+// Register Admin or Parent into the Bus System
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);

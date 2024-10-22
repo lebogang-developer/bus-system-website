@@ -69,7 +69,7 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] != 'parent') {
                     <!-- Submit Button -->
                     <div class="d-grid">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-paper-plane"></i> Submit Application
+                            <i class="fas fa-paper-plane"></i> Register
                         </button>
                     </div>
                     </form>

@@ -10,9 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql = "INSERT INTO learner_tbl (learner_name, learner_surname, learner_cell_no, learner_grade) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    // $parent_id = $_SESSION['parent_name']; 
-    // Assuming parent ID is the username
-
+    
     $stmt->bind_param("ssss", $learner_name, $learner_surname, $learner_cell_no, $learner_grade);
 
     if ($stmt->execute()) {
@@ -40,7 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    
+    <div class="container mt-5">
+        <h1 class="text-center">Apply for Bus Transport 2025</h1>
+        
+    </div>
 
     <!-- Bootstrap JS (Optional, if you need Bootstrap's JavaScript functionality) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
