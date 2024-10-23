@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($reportType == 'waiting_list') {
         $query = "SELECT * FROM learner_tbl WHERE status = 'waiting_list'";
     } elseif ($reportType == 'daily_bus_usage') {
-        $query = "SELECT * FROM learner_tbl WHERE bus_date = CURDATE() AND bus_route IS NOT NULL";
+        $query = "SELECT * FROM learner_tbl, bus_tbl, routes_tbl WHERE bus_time = CURDATE() AND route_name IS NOT NULL";
     }
     // Prepare and execute the query
     $stmt = $conn->prepare($query);
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <th>Grade</th>
                         <th>Bus Route</th>
                         <th>Status</th>
-                        <th>Bus Date</th>
+                        <th>Bus Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,9 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <td><?php echo $row['name']; ?></td>
                             <td><?php echo $row['surname']; ?></td>
                             <td><?php echo $row['learner_grade']; ?></td>
-                            <td><?php echo $row['bus_route']; ?></td>
+                            <td><?php echo $row['route_name']; ?></td>
                             <td><?php echo $row['status']; ?></td>
-                            <td><?php echo $row['bus_date']; ?></td>
+                            <td><?php echo $row['bus_time']; ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
