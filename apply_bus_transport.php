@@ -4,13 +4,13 @@ require 'config.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $learner_id = $_POST['learner_id'];
+    // $learner_id = $_POST['learner_id'];
     $bus_route = $_POST['bus_route'];
 
     // Update the leaner's bus route for 2025
     $sql = "UPDATE learner_tbl SET bus_route = ?, status = 'registered' WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $bus_route, $learner_id);
+    $stmt->bind_param("si", $bus_route);
 
     if ($stmt->execute()) {
         echo "Bus Transport for 2025 applied successfully!";
@@ -30,6 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Apply for Bus Transport</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -40,8 +41,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-body">
-                        <h2 class="text-center mb-4">Learner Bus Registration</h2>
-                        <form action="register_learner.php" method="POST">
+                        <h2 class="text-center mb-4">Learner Bus Route Application</h2>
+                        <form action="apply_bus_transport.php" method="POST">
                             <!-- Learner Name -->
                             <div class="mb-3">
                                 <label for="learner_name" class="form-label">

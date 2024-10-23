@@ -2,6 +2,7 @@
 session_start();
 require 'config.php';
 
+// Parent to register the learner into the bus system
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $learner_name = $_POST['learner_name'];
     $learner_surname = $_POST['learner_surname'];
