@@ -1,6 +1,6 @@
 <?php
 // Connect to the database
-require 'config.php';
+include 'config.php';
 session_start();
 
 // Variables
@@ -46,11 +46,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Form to select report type -->
     <form method="post" class="mb-4">
         <div class="form-group">
-            <label for="reportType"><i class="bi bi-journal-check"></i> Select Report:</label>
+            <label for="reportType" class="mb-3"><i class="bi bi-journal-check"></i> Select Report:</label>
             <select class="form-select" name="report_type" id="reportType" required>
                 <option value="" disabled selected>Select a report</option>
                 <option value="waiting_list"><i class="bi bi-person-fill-exclamation"></i> Learners on Waiting List</option>
                 <option value="daily_bus_usage"><i class="bi bi-bus-front-fill"></i> Learners Using Bus Today</option>
+                <option value="weekly_bus_usage"><i class="bi bi-calendar-week"></i> Learners Using Bus This Week</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-search"></i> Generate Report</button>
@@ -58,17 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Display results -->
     <?php if ($result && $result->num_rows > 0): ?>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Grade</th>
-                        <th>Bus Route</th>
-                        <th>Status</th>
-                        <th>Bus Time</th>
+       > <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead class="table-dark">
+                    <tr>">
+                        <th scope="col"><i class="bi bi-card-list"></i> ID</th>
+                        <th scope="col"><i class="bi bi-card-list"></i>Name</th>
+                        <th scope="col"><i class="bi bi-person-fill"></i>Surname</th>
+                        <th scope="col"><i class="bi bi-person-badge-fill"></i>Grade</th>
+                        <th scope="col"><i class="bi bi-mortarboard-fill"></i>Bus Route</th>
+                        <th scope="col"><i class="bi bi"></i>Status</th>
+                        <th scope="col"><i class="bi bi"></i>Bus Time</th>
                     </tr>
                 </thead>
                 <tbody>
