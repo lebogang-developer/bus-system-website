@@ -58,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // email logic here
 
         echo "<h3 class='text-center'>Application successful. A confirmation email has been sent.</h3>";
-                
     } else {
         // Add leaner to the waiting list
         $stmt = $conn->prepare("INSERT INTO waiting_list_tbl (learner_name, learner_surname, learner_cell_no, learner_grade, bus_id) VALUES (?, ?, ?, ?)");
@@ -69,9 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // email logic her
 
         echo "<h3 class='text-center'>The bus is currently full. Your learner has been added to the waiting list.</h3>";
-    
     }
-
 }
 
 ?>
@@ -131,40 +128,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <option value="12">Grade 12</option>
                                 </select>
                             </div>
-                            <!-- Bus Route -->
-                            <!-- <div class="mb-3">
-                                <label for="bus_route" class="form-label">
-                                    <i class="fas fa-bus"></i> Select Bus & Route
-                                </label>
-                                <select class="form-select" id="route_name" name="route_name" required>
-                                    <option selected disabled>Select Bus Route</option>
-                                    <option value="bus_1">Bus 1 - Rooihuiskraal</option>
 
-                                    <option value="bus_2">Bus 2 -Wierdapark</option>
-
-                                    <option value="bus_3">Bus 3 - Centurion</option>
-                                </select>
-                            </div> -->
                             <!-- Select Bus -->
-                             <div class="mb-3">
+                            <div class="mb-3">
                                 <label for="bus_id" class="form-label">Select Bus</label>
                                 <select name="bus_id" id="bus_id" class="form-select" required>
                                     <option value="">Select Bus</option>
                                     <!-- Populate from database -->
-                                     <?php 
-                                     include 'config.php';
-                                     $result = $conn->query("SELECT bus_id, bus_name FROM bus_tbl");
-                                        while ($row = $result->fetch_assoc()) {
+                                    <?php
+                                    include 'config.php';
+                                    $result = $conn->query("SELECT bus_id, bus_name FROM bus_tbl");
+                                    while ($row = $result->fetch_assoc()) {
                                         echo "<option value='" . $row['bus_id'] . "'>" . $row['bus_name'] . "</option>";
-                                        }
-                                     ?>
+                                    }
+                                    ?>
                                 </select>
-                             </div>
+                            </div>
                             <!-- Route Selection -->
                             <div class="mb-3">
-                                <label for="route_id" class="form-label">Select Route</label>
+                                <label for="route_id" class="form-label">Select Bus Route</label>
                                 <select name="route_id" id="route_id" class="form-select" required>
-                                    <option value="">Choose a Route</option>
+                                    <option value="">Select Route</option>
                                     <?php
                                     $result = $conn->query("SELECT route_id, route_name FROM routes_tbl");
                                     while ($row = $result->fetch_assoc()) {
@@ -188,11 +172,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </select>
                             </div>
 
-                               <!-- Dropoff Time -->
+                            <!-- Drop-off Time -->
                             <div class="mb-3">
                                 <label for="dropoff_id" class="form-label">Dropoff Time</label>
                                 <select name="dropoff_id" id="dropoff_id" class="form-select" required>
-                                    <option value="">Choose Dropoff Time</option>
+                                    <option value="">Select Dropoff Time</option>
                                     <?php
                                     $result = $conn->query("SELECT id, time FROM dropoff");
                                     while ($row = $result->fetch_assoc()) {
@@ -202,36 +186,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </select>
                             </div>
 
-                            <!-- Pick-Up Time -->
-                            <!-- <div class="mb-3">
-                                <label class="form-label">
-                                    <i class="fas fa-clock"></i> Pick-Up Time
-                                </label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pickup_time" id="morning" value="morning" required>
-                                    <label class="form-check-label" for="morning">
-                                        Morning Pick-Up & Afternoon Pick-Up
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pickup_time" id="afternoon" value="afternoon" required>
-                                    <label class="form-check-label" for="afternoon">
-                                        Morning Pick-Up
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pickup_time" id="afternoon" value="afternoon" required>
-                                    <label class="form-check-label" for="afternoon">
-                                        Afternoon Pick-Up
-                                    </label>
-                                </div>
-                            </div> -->
-                            <!-- Submit Button -->
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-paper-plane"></i> Submit Application
-                                </button>
+                            <div class="mb-3">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i>Apply</button>
                             </div>
+
                         </form>
                     </div>
                 </div>
