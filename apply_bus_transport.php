@@ -1,26 +1,4 @@
 <?php
-// session_start();
-// require 'config.php';
-
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-//     $learner_id = $_POST['learner_id'];
-//     $route_name = $_POST['route_name'];
-
-//     // Update the leaner's bus route for 2025
-//     $sql = "UPDATE learner_tbl SET route_name = ?, status = 'registered' WHERE learner_id = ?";
-//     $stmt = $conn->prepare($sql);
-//     $stmt->bind_param("is", $learner_id, $route_name);
-
-//     if ($stmt->execute()) {
-//         echo "Bus Transport for 2025 applied successfully!";
-//     } else {
-//         echo "Error: " . $stmt->error;
-//     }
-
-//     $stmt->close();
-//     $conn->close();
-// }
 
 include 'config.php';
 
@@ -43,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
 
+    // Bus capacity
     $seat_limit = 0;
     if ($bus_id == 1) $seat_limit = 35;
     elseif ($bus_id == 2) $seat_limit = 8;
@@ -50,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($row['seat_count'] < $seat_limit) {
         // Register learner on the bus
-        $stmt = $conn->prepare("INSERT INTO learner_tbl, bus_tbl (learner_name, learner_grade, bus_id, route_id, pickup_id, dropoff_id, bus_time) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO learner_tbl (learner_name, learner_grade, bus_id, route_id, pickup_id, dropoff_id, bus_time) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("siiiiii", $learner_name, $learner_surname, $learner_cell_no, $learner_grade, $bus_id, $route_id, $pickup_id, $dropoff_id, $bus_time);
         $stmt->execute();
 
@@ -67,9 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Send email to the parent informing them of the waiting list status
         // email logic her
 
-        echo "<h3 class='text-center'>The bus is currently full. Your learner has been added to the waiting list.</h3>";
+        echo "<p class='text-center'>The bus is currently full. Your learner has been added to the waiting list.</p>";
     }
 }
+
+
+// Enable error reporting in PHP for development purposes
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 ?>
 
@@ -82,6 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Apply for Bus Transport</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Local use -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
 <body>
@@ -109,17 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <!-- Cell Number -->
                             <div class="mb-3">
-                                <label for="cell_no" class="form-label">
+                                <label for="learner_cell_no" class="form-label">
                                     <i class="fas fa-phone"></i> Cell Number
                                 </label>
-                                <input type="tel" class="form-control" id="cell_no" name="cell_no" placeholder="Enter cell number" required>
+                                <input type="tel" class="form-control" id="cell_no" name="learner_cell_no" placeholder="Enter cell number" required>
                             </div>
                             <!-- Grade -->
                             <div class="mb-3">
                                 <label for="grade" class="form-label">
                                     <i class="fas fa-graduation-cap"></i> Grade
                                 </label>
-                                <select class="form-select" id="grade" name="grade" required>
+                                <select class="form-select" id="grade" name="learner_grade" required>
                                     <option selected disabled>Select Grade</option>
                                     <option value="8">Grade 8</option>
                                     <option value="9">Grade 9</option>
@@ -187,16 +173,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
 
                             <div class="mb-3">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i>Apply</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Apply</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

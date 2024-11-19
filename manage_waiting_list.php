@@ -1,39 +1,51 @@
 <?php
-session_start();
-require 'config.php';
 
-if ($_SERVER["REQUEST_METHOD"]) {
-    $learner_id = $_POST['learner_id'] ?? null;
+include 'config.php'; // Ensure connection is established
 
-    // Check if space is available
-    $sql_check = "SELECT COUNT(*) FROM learner_tbl WHERE status  'registered'";
+// Bus capacities
+$bus_capacities = [
+    "Bus 1" => 35,
+    "Bus 2" => 8,
+    "Bus 3" => 15,
+];
 
-    $stmt_check = $conn->prepare($sql_check);
-    $stmt_check->execute();
-    $stmt_check->bind_result($count);
-    $stmt_check->fetch();
-    $stmt_check->close();
+// Bus selected for the learner
+$selected_bus = "Bus 2";
+$learner_id = $_POST['learner_id'];
 
-    $bus_capacity = 35; // For bus route 1
+// Check current bus occupancy
+$query = "SELECT COUNT(*) AS total FROM learner_tbl WHERE bus_name = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $selected_bus);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
 
-    if ($count < $bus_capacity) {
-        // Move learner to registered status
-        $sql = "UPDATE learner_btl SET status = 'registered' WHERE id ]= ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $learner_id);
+$current_occupancy = $row['total'];
 
-        if ($stmt->execute()) {
-            echo "Learner moved from waiting list!";
-        } else {
-            echo "Error: " . $stmt->error;
-        }
+// Check if the bus is full
+if ($current_occupancy < $bus_capacities[$selected_bus]) {
+    // Assign the learner to the bus
+    $assign_query = "UPDATE learner_tbl SET bus_name = ?, status = 'assigned' WHERE learner_id = ?";
+    $assign_stmt = $conn->prepare($assign_query);
+    $assign_stmt->bind_param("si", $selected_bus, $learner_id);
+    if ($assign_stmt->execute()) {
+        echo "<p?>Learner successfully assigned to $selected_bus.</p>";
     } else {
-        echo "No available spots to move the learner from the waiting list.";
+        echo "Error assigning learner: " . $conn->error;
     }
-
-    $stmt->close();
-    $conn->close();
+} else {
+    // Move the learner to the waiting list
+    $waiting_query = "UPDATE learner_tbl SET status = 'waiting' WHERE learner_id = ?";
+    $waiting_stmt = $conn->prepare($waiting_query);
+    $waiting_stmt->bind_param("i", $learner_id);
+    if ($waiting_stmt->execute()) {
+        echo "<p>Bus $selected_bus is full. Learner has been moved to the waiting list.</p>";
+    } else {
+        echo "Error updating waiting list: " . $conn->error;
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -51,11 +63,13 @@ if ($_SERVER["REQUEST_METHOD"]) {
         <h2 class="text-center">Manage Waiting List</h2>
         <form action="manage_waiting_list.php" method="post">
             <div class="mb-3">
-                <!-- <label for="learner_id" class="form-label">Learner ID</label> -->
-                <input type="hidden" name="learner_id" value="<?php echo $learner_id; ?>">
+                <input type="hidden"  name="learner_id"  value="<?php echo $learner_id; ?>">
             </div>
-            <button type="submit" class="btn btn-primary">Move Learner to Registered</button>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Assign to Bus</button>
+            </div>
         </form>
     </div>
 </body>
+
 </html>
