@@ -3,24 +3,34 @@
 include 'config.php';
 
 // Variables
-$reportType = '';
+$report_type = '';
 $result = null;
 
 // Check form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $reportType = $_POST['report_type'];
+    $report_type = $_POST['report_type'];
 
     // Execute query based on the type of report selected
-    if ($reportType === 'daily_waiting_list') {
+    if ($report_type === 'waiting_list') {
         // Query for learners on the waiting list
         $query = "SELECT * FROM waiting_list_tbl";
-    } elseif ($reportType == 'daily_bus_usage') {
-        $query = "SELECT * FROM learner_tbl, bus_tbl, routes_tbl WHERE bus_time = CURDATE() AND route_name IS NOT NULL";
-    } elseif ($reportType == 'weekly_bus_usage') {
-        // Query for total learners using bus transport for the week
-        $query = "SELECT bus_id COUNT(*) as total_learners FROM learner_tbl WHERE WEEK(bus_time) = WEEK(CURDATE()) GROUP BY bus_id";
+    } elseif ($report_type == 'daily_bus_usage') {
+        $query = "SELECT l.learner_id, l.learner_name, l.learner_surname, l.learner_grade, l.learner_cell_no 
+                  FROM learner_tbl l
+                  INNER JOIN bus_tbl b ON l.bus_id = b.bus_id
+                  INNER JOIN routes_tbl r ON l.route_id = r.route_id
+                  WHERE DATE(bus_time) = CURDATE() AND route_name IS NOT NULL";
 
-        // Prepare and execute the query
+    } elseif ($report_type == 'weekly_bus_usage') {
+        // Query for total learners using bus transport for the week
+        $query = "SELECT bus_id, COUNT(*) as total_learners 
+                  FROM learner_tbl 
+                  WHERE WEEK(bus_time) = WEEK(CURDATE()) 
+                  GROUP BY bus_id";
+    }
+
+    // Prepare and execute the query if it exists
+    if (isset($query)) {
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -55,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="reportType" class="mb-3"><i class="bi bi-journal-check"></i> Select Report:</label>
             <select class="form-select" name="report_type" id="reportType" required>
                 <option value="" disabled selected>Select a report</option>
-                <option value="waiting_list"><i class="bi bi-person-fill-exclamation"></i> Learners on Waiting List</option>
-                <option value="daily_bus_usage"><i class="bi bi-bus-front-fill"></i> Learners Using Bus Today</option>
-                <option value="weekly_bus_usage"><i class="bi bi-calendar-week"></i> Learners Using Bus This Week</option>
+                <option value="waiting_list">Learners on Waiting List</option>
+                <option value="daily_bus_usage">Learners Using Bus Today</option>
+                <option value="weekly_bus_usage">Learners Using Bus This Week</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-search"></i> Generate Report</button>
@@ -72,25 +82,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <th scope="col"><i class="bi bi-card-list"></i> ID</th>
                         <th scope="col"><i class="bi bi-person-fill"></i> Name</th>
                         <th scope="col"><i class="bi bi-person-badge-fill"></i> Surname</th>
-                        <th scope="col"><i class="bi bi-mortarboard-fill"></i>Grade</th>
-                        <!-- <th scope="col"><i class="bi bi-signpost-2-fill"></i>Bus Route</th> -->
-                        <th scope="col"><i class="bi bi-clock-fill"></i> Time (Morning/Afternoon)</th>
+                        <th scope="col"><i class="bi bi-mortarboard-fill"></i> Grade</th>
+                        <th scope="col"><i class="bi bi-phone"></i> Cell No</th>
+                        <th scope="col"><i class="bi bi-clock-fill"></i> Time</th>
                         <th scope="col"><i class="bi bi-calendar-event-fill"></i> Date/Week</th>
-                        <!-- <th scope="col"><i class="bi bi"></i>Status</th> -->
-                        <th scope="col"><i class="bi bi"></i>Bus Time</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo $row['learner_id']; ?></td>
-                            <td><?php echo $row['learner_name']; ?></td>
-                            <td><?php echo $row['learner_surname']; ?></td>
-                            <td><?php echo $row['learner_grade']; ?></td>
-                            <!-- <td><?php echo $row['route_name']; ?></td> -->
-                            <!-- <td><?php echo $row['status']; ?></td> -->
-                            <td><?php echo $row['bus_time']; ?></td>
-                        </tr>
+                                <td><?php echo $row['learner_id'] ?? ''; ?></td>
+                                <td><?php echo $row['learner_name'] ?? ''; ?></td>
+                                <td><?php echo $row['learner_surname'] ?? ''; ?></td>
+                                <td><?php echo $row['learner_grade'] ?? ''; ?></td>
+                                <td><?php echo $row['learner_cell_no'] ?? ''; ?></td>
+                                <td><?php echo $row['bus_time'] ?? ''; ?></td>
+                                <td><?php echo $row['bus_time'] ?? ''; ?></td>
+                            </tr>
                     <?php endwhile; ?>
                 </tbody>
             </table>

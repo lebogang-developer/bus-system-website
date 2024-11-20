@@ -147,10 +147,10 @@ error_reporting(E_ALL);
                             <!-- Pickup Time -->
                             <div class="mb-3">
                                 <label for="pickup_id" class="form-label">Pickup Time</label>
-                                <select name="pickup_id" id="pickup_id" class="form-select" required>
+                                <select name="pickup_no" id="pickup_no" class="form-select" required>
                                     <option value="">Select Pickup Time</option>
                                     <?php
-                                    $result = $conn->query("SELECT id, time FROM pickup_tbl");
+                                    $result = $conn->query("SELECT pickup_no, time FROM pickup_tbl");
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<option value='" . $row['id'] . "'>" . $row['time'] . "</option>";
                                     }
@@ -161,7 +161,7 @@ error_reporting(E_ALL);
                             <!-- Drop-off Time -->
                             <div class="mb-3">
                                 <label for="dropoff_id" class="form-label">Dropoff Time</label>
-                                <select name="dropoff_id" id="dropoff_id" class="form-select" required>
+                                <select name="dropoff_no" id="dropoff_no" class="form-select" required>
                                     <option value="">Select Dropoff Time</option>
                                     <?php
                                     $result = $conn->query("SELECT id, time FROM dropoff");
@@ -173,7 +173,8 @@ error_reporting(E_ALL);
                             </div>
 
                             <div class="mb-3">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Apply</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"> </i> Apply</button>
                             </div>
                         </form>
                     </div>
